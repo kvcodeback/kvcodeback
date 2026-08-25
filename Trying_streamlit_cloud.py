@@ -1,6 +1,6 @@
 import streamlit as st
 import socket
-# 🟢 FIX: All libraries imported safely at the top
+#  FIX: All libraries imported safely at the top
 import ollama
 from google import genai
 
@@ -37,7 +37,7 @@ if is_running_on_cloud():
 
 # --- PROFILE 2: LOCAL MODE (Uses your local Ollama) ---
 else:
-    st.caption("💻 Local Mode: Powered by Ollama Llama 3.2:1b")
+    st.caption("Local Mode: Powered by Ollama Llama 3.2:1b")
     
     def generate_response(questionToAsk):
         try:
