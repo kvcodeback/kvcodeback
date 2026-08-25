@@ -29,7 +29,7 @@ if is_running_on_cloud():
                     model="qwen/qwen3.6-27b",
                     messages=[{'role': 'user', 'content': questionToAsk}]
                 )
-                st.info(response.choices.message.content)
+                st.info(response.choices[0].message.content)
             except Exception as e:
                 st.error(f"Groq Cloud Error: {e}")
     else:
