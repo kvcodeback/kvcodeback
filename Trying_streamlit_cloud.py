@@ -26,7 +26,7 @@ if is_running_on_cloud():
             try:
                 client = Groq(api_key=api_key)
                 response = client.chat.completions.create(
-                    model="llama-3.3-70b-versatile",
+                    model="qwen/qwen3.6-27b",
                     messages=[{'role': 'user', 'content': questionToAsk}]
                 )
                 st.info(response.choices.message.content)
