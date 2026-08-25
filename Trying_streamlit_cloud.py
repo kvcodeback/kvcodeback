@@ -2,7 +2,7 @@ import streamlit as st
 import socket
 #  FIX: All libraries imported safely at the top
 import ollama
-from google import genai
+from groq import Groq
 
 # Smart Function: Detects if the app is running on Streamlit Cloud or your PC
 def is_running_on_cloud():
@@ -16,24 +16,24 @@ st.title("JohnDoe's own ChatGPT")
 
 # --- PROFILE 1: CLOUD MODE (Uses Google Gemini) ---
 if is_running_on_cloud():
-    st.caption("☁️ Cloud Mode: Powered by Google Gemini 2.5 Flash")
+    st.caption("☁️ Cloud Mode: Powered by Groq Llama 3")
     
     # Read the secret key you saved in the Streamlit Cloud Dashboard
-    if "GOOGLE_API_KEY" in st.secrets:
-        api_key = st.secrets["GOOGLE_API_KEY"]
+    if "GROQ_API_KEY" in st.secrets:
+        api_key = st.secrets["GROQ_API_KEY"]
         
         def generate_response(questionToAsk):
             try:
-                client = genai.Client(api_key=api_key)
-                response = client.models.generate_content(
-                    model="gemini-3.6-flash",
-                    contents=questionToAsk,
+                client = Groq(api_key=api_key)
+                response = client.chat.completions.create(
+                    model="llama-3.3-70b-versatile",
+                    messages=[{'role': 'user', 'content': questionToAsk}]
                 )
-                st.info(response.text)
+                st.info(response.choices.message.content)
             except Exception as e:
-                st.error(f"Gemini Cloud Error: {e}")
+                st.error(f"Groq Cloud Error: {e}")
     else:
-        st.error("Missing GOOGLE_API_KEY in Streamlit Secrets Dashboard.")
+        st.error("Missing GROQ_API_KEY in Streamlit Secrets Dashboard.")
 
 # --- PROFILE 2: LOCAL MODE (Uses your local Ollama) ---
 else:
